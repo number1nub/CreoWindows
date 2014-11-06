@@ -1,6 +1,9 @@
 #NoEnv
 #SingleInstance,Force
+SetWorkingDir, %A_ScriptDir%
 SetTitleMatchMode, 2
+
+Menu, Tray, Icon, creo.ico
 
 
 #IfWinActive, Creo Parametric
@@ -28,6 +31,7 @@ return
 	creo := GetWinList()
 	if (!creo.MaxIndex())
 		return
+	list := ""
 	for c, win in creo
 		list .= (list ? "|" : "") win.title
 	Gui, +ToolWindow +AlwaysOnTop
@@ -45,7 +49,8 @@ winList_Click:
 		Gui, CreoWins:Submit
 		Gui, CreoWins:Destroy
 		newInd := switchTo(creo, selWin)
-		activate(creo[selWin].id)
+		if (selWin != GetActiveWin(creo).index)
+			activate(creo[selWin].id)
 	}
 return
 
