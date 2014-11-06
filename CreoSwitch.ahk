@@ -7,21 +7,30 @@ SetTitleMatchMode, 2
 
 ^Tab::
 {
-	curWin := WinExist("A")
-	wList  := GetWinList()
-	
+	curWin := WinExist("A")a
 	creo := GetWinList()
-	ShowWins(creo)
-	
-	if (inActive)
+	if (!creo.MaxIndex())
+		return
+	active := GetActiveWin(creo)
+	if (curWin = active.id)
 	{
-		switchTo(creoWins, (activeInd < creoWins.MaxIndex() ? curInd++ : curInd--))
-		activate()
+		newInd := switchTo(creo, (active.index < creo.MaxIndex() ? active.index + 1 : active.index - 1))
+		activate(creo[newInd].id)
 	}
 	else
 		activate()
 }
 return
+
+
+
+^+Tab::
+	creo := GetWinList()
+	if (!creo.MaxIndex())
+		return
+	ShowWins(creo)
+return
+
 
 
 
@@ -32,8 +41,4 @@ return
 #Include ShowWins.ahk
 #Include StrReplace.ahk
 #Include switchTo.ahk
-
-
-
-;_________________________________
-
+#Include GetActiveWin.ahk

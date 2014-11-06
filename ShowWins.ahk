@@ -18,13 +18,14 @@ ShowWins(winList)
 	winList_Click:
 		if (A_GuiEvent = "DoubleClick")
 		{
+			Gui, CreoWins:Submit
 			Gui, CreoWins:Destroy
-			switchTo(winList, A_EventInfo)
+			switchTo(winList, winList[selWin].id)
 		}
 	return
 	
 	CreoWinsGuiClose:
 	CreoWinsGuiEscape:
-	Gui, Destroy
+		Gui, Destroy
 	return
 }

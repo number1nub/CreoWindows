@@ -1,5 +1,9 @@
-switchTo(winList, ind)
+switchTo(win, ind="")
 {
-	WinActivate, % "ahk_id " winList[ind].id
-	WinWaitActive, % "ahk_id " winList[ind].id
+	static lastInd
+	if (IsObject(win))
+		WinActivate, % "ahk_id " win[ind].id
+	else
+		WinActivate, ahk_id %win%
+	return (lastInd := ind)
 }
