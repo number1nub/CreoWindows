@@ -1,0 +1,4 @@
+activate()
+{
+	Send, {Blind}!va
+}
