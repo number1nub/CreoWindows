@@ -4,7 +4,10 @@ SetWorkingDir, %A_ScriptDir%
 SetTitleMatchMode, 2
 CoordMode, Mouse, Screen
 
-Menu, Tray, Icon, % FileExist("CreoSwitch.ico") ? "CreoSwitch.ico" : ""
+if (A_IsCompiled)
+	Menu, Tray, Icon, % A_ScriptFullPath, -159
+else
+	Menu, Tray, Icon, % FileExist("CreoSwitch.ico") ? "CreoSwitch.ico" : ""
 
 #IfWinActive, Creo Parametric
 
