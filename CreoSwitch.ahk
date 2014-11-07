@@ -2,9 +2,9 @@
 #SingleInstance,Force
 SetWorkingDir, %A_ScriptDir%
 SetTitleMatchMode, 2
+CoordMode, Mouse, Screen
 
-Menu, Tray, Icon, creo.ico
-
+Menu, Tray, Icon, % FileExist("CreoSwitch.ico") ? "CreoSwitch.ico" : ""
 
 #IfWinActive, Creo Parametric
 
@@ -28,18 +28,22 @@ return
 
 
 ^+Tab::
+	MouseGetPos, mouseX
 	creo := GetWinList()
 	if (!creo.MaxIndex())
 		return
 	list := ""
 	for c, win in creo
 		list .= (list ? "|" : "") win.title
-	Gui, +ToolWindow +AlwaysOnTop
+
+	Gui, CreoWins:+ToolWindow +AlwaysOnTop
+	
 	Gui, CreoWins:Font,  s22,  Segoe UI
 	Gui, CreoWins:Add, Text, x10 y10 w600 h50, Creo Windows
 	Gui, CreoWins:Font,  s14,  Segoe UI
 	Gui, CreoWins:Add, ListBox, % "x10 y60 w600 h324 gwinList_Click vselWin AltSubmit Choose" GetActiveWin(creo).index,  %list%
-	Gui, CreoWins:Show, w619 h394,  Creo Window Switcher
+	guiCenter := GetCenterCoords(619)
+	Gui, CreoWins:Show, % "x " (mouseX > guiCenter.limit ? guiCenter.right : guiCenter.left) " w619 h394",  Creo Window Switcher
 return
 
 
@@ -62,10 +66,10 @@ return
 
 
 
-
-#Include activate.ahk
-#Include GetCreoWins.ahk
+#Include Activate.ahk
+#Include Anchor.ahk
 #Include GetWinList.ahk
 #Include StrReplace.ahk
-#Include switchTo.ahk
+#Include SwitchTo.ahk
 #Include GetActiveWin.ahk
+#Include GetCenterCoords.ahk
