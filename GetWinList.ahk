@@ -9,6 +9,5 @@ GetWinList()
 		If (InStr(Title, " - Creo Parametric"))
 			winList.Insert({ id: ID, title: StrReplace(Title, " - Creo Parametric"), active: InStr(Title, "(Active)")})
 	}
-	DetectHiddenWindows, %DetectHiddenWindowsB%
 	Return, winList
 }
